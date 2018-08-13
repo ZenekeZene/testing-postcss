@@ -1,0 +1,126 @@
+{
+  "size": 536,
+  "gzipSize": 224,
+  "humanizedSize": "536B",
+  "humanizedGzipSize": "224B",
+  "rules": {
+    "total": 9,
+    "size": {
+      "graph": [
+        2,
+        1,
+        1,
+        4,
+        1,
+        1,
+        1,
+        1,
+        3
+      ],
+      "max": 4,
+      "average": 1.6666666666666667
+    },
+    "selectorByRuleSizes": [
+      {
+        "selector": ".main",
+        "declarations": 4
+      },
+      {
+        "selector": ".main__section",
+        "declarations": 3
+      },
+      {
+        "selector": "html",
+        "declarations": 2
+      },
+      {
+        "selector": ".main::placeholder",
+        "declarations": 1
+      },
+      {
+        "selector": ".main::-ms-input-placeholder",
+        "declarations": 1
+      },
+      {
+        "selector": ".main:-ms-input-placeholder",
+        "declarations": 1
+      },
+      {
+        "selector": ".main::-webkit-input-placeholder",
+        "declarations": 1
+      },
+      {
+        "selector": "body",
+        "declarations": 1
+      },
+      {
+        "selector": ":root",
+        "declarations": 1
+      }
+    ]
+  },
+  "selectors": {
+    "total": 9,
+    "type": 2,
+    "class": 6,
+    "id": 0,
+    "pseudoClass": 1,
+    "pseudoElement": 0,
+    "values": [
+      "html",
+      ":root",
+      "body",
+      ".main",
+      ".main::-webkit-input-placeholder",
+      ".main:-ms-input-placeholder",
+      ".main::-ms-input-placeholder",
+      ".main::placeholder",
+      ".main__section"
+    ],
+    "specificity": {
+      "max": 20,
+      "average": 9.444444444444445
+    }
+  },
+  "declarations": {
+    "total": 15,
+    "unique": 10,
+    "properties": {
+      "border": [
+        "1px solid red",
+        "1px solid red",
+        "1px solid orange"
+      ],
+      "height": [
+        "100%",
+        "100%"
+      ],
+      "--variable2": [
+        "#faf"
+      ],
+      "padding": [
+        "21px",
+        "10px"
+      ],
+      "background-color": [
+        "#faf",
+        "var(--variable2)"
+      ],
+      "color": [
+        "gray",
+        "gray",
+        "gray",
+        "gray"
+      ],
+      "display": [
+        "flex"
+      ]
+    }
+  },
+  "mediaQueries": {
+    "total": 0,
+    "unique": 0,
+    "values": [],
+    "contents": []
+  }
+}

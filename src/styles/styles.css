@@ -1,0 +1,35 @@
+:root {
+    --color-primary: #faf;
+}
+
+$variable: 100px;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    &:before,
+    &:after {
+        box-sizing: inherit;
+    }
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    background-color: var(--color-primary);
+}
+
+.main {
+    height: inherit;
+    padding: $variable;
+    background-color: var(--color-primary);
+
+    &__section {
+        --color-primary: red;
+        padding: 10px;
+        border: 1px solid var(--color-primary);
+    }
+}

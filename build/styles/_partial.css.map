@@ -1,0 +1,1 @@
+{"version":3,"sources":["styles/_partial.css"],"names":[],"mappings":"AAAA;IACI,wBAAwB;;IAExB,cAAc;CACjB","file":"_partial.css","sourcesContent":["* {\n    border: 1px solid olive;\n\n    margin: 5px 0;\n}"]}

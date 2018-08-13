@@ -1,0 +1,37 @@
+:root {
+    --color-primary: #faf;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+*:before,
+    *:after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    background-color: #faf;
+    background-color: var(--color-primary);
+}
+
+.main {
+    height: inherit;
+    padding: 100px;
+    background-color: #faf;
+    background-color: var(--color-primary);
+}
+
+.main__section {
+        --color-primary: red;
+        padding: 10px;
+        border: 1px solid #faf;
+        border: 1px solid var(--color-primary);
+    }
+/*# sourceMappingURL=styles.css.map */
