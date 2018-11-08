@@ -1,18 +1,21 @@
-:root {
-    --color-primary: #faf;
+main {
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 20px solid blue;
 }
-
 * {
+    border: 1px solid blue;
     margin: 0;
     padding: 0;
     box-sizing: border-box
 }
-
 *:before,
     *:after {
     box-sizing: inherit;
 }
-
+:root {
+    --color-primary: #faf;
+}
 html,
 body {
     height: 100%;
@@ -20,18 +23,42 @@ body {
     background-color: #faf;
     background-color: var(--color-primary);
 }
-
 .main {
     height: inherit;
     padding: 100px;
     background-color: #faf;
     background-color: var(--color-primary);
 }
-
 .main__section {
         --color-primary: red;
         padding: 10px;
         border: 1px solid #faf;
         border: 1px solid var(--color-primary);
     }
+.aspect-box {
+    position: relative;
+    background: lime;
+    width: 20vw;
+    box-sizing: border-box;
+}
+.aspect-box > * {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    box-sizing: border-box;
+}
+.aspect-box:before {
+    position: relative;
+    display: block;
+    content: "";
+    padding-top: 100%;
+    box-sizing: border-box;
+}
+.box {
+    #size: 50px;
+    background-color: red;
+    margin: 20px;
+}
 /*# sourceMappingURL=styles.css.map */

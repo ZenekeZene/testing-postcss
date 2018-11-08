@@ -1,26 +1,55 @@
-var gulp = require('gulp');
-const postcss    = require('gulp-postcss')
+const gulp = require('gulp');
+const rename = require("gulp-rename");
+const postcss    = require('gulp-postcss');
 const sourcemaps = require('gulp-sourcemaps')
+const gulpStylelint = require('gulp-stylelint');
 const precss = require('precss');
+const importPartial = require('postcss-partial-import');
+
 const autoprefixer = require('autoprefixer');
-var browserSync = require('browser-sync').create();
+const browserSync = require('browser-sync').create();
+const ratio = require('postcss-aspect-ratio');
 
-var fs = require('fs')
-var cssstats = require('cssstats')
+const defineProperty = require('postcss-define-property');
 
-var css = fs.readFileSync('./src/styles/styles.css', 'utf8');
+const plugins = [
+    defineProperty(
+        {
+            syntax: {
+                atrule: true,
+                parameter: '',
+                property: '-',
+                separator: ''
+            }
+        }
+    ),
+    importPartial,
+    precss,
+    autoprefixer,
+    ratio
+];
 
-var cssstats = require('cssstats')
-var stats = cssstats('./build/styles/styles.css');
+const src = './src/**/*.pcss';
 
 gulp.task('css', () => {
   
-    return gulp.src('./src/**/*.css')
-      .pipe( sourcemaps.init() )
-      .pipe( postcss([ precss, autoprefixer ]) )
-      .pipe( sourcemaps.write('.') )
-      .pipe( gulp.dest('./build/') )
-      .pipe(browserSync.stream());
+    return gulp.src('./src/styles/styles.pcss')
+        .pipe( sourcemaps.init() )
+        .pipe( postcss(plugins) )
+        .pipe(gulpStylelint({
+            failAfterError: false,
+            reportOutputDir: 'reports/lint',
+            reporters: [
+                {formatter: 'verbose', console: true},
+                {formatter: 'json', save: 'report.json'},
+            ],
+        }) )
+        .pipe( rename({
+            extname: ".css"
+        }) )
+        .pipe( sourcemaps.write('.') )
+        .pipe( gulp.dest('./build/styles') )
+        .pipe( browserSync.stream() );
 });
 
 gulp.task('reload', ['css'], function (done) {
@@ -28,12 +57,12 @@ gulp.task('reload', ['css'], function (done) {
         server: './'
     });
     
-    gulp.watch('./src/**/*.css', ['css']);
+    gulp.watch(src, ['css']);
     gulp.watch("./*.html").on('change', browserSync.reload);
-} )
+})
 
 gulp.task('watch', function() {
-    gulp.watch('./src/**/*.css', ['css']);
+    gulp.watch(src, ['css']);
 });
 
 gulp.task('default', ['css', 'reload']);
