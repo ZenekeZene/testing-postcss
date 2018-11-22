@@ -9,6 +9,7 @@ const importPartial = require('postcss-partial-import');
 const autoprefixer = require('autoprefixer');
 const browserSync = require('browser-sync').create();
 const ratio = require('postcss-aspect-ratio');
+const jorgeplugin = require('postcss-testing-plugin');
 
 const defineProperty = require('postcss-define-property');
 
@@ -23,6 +24,7 @@ const plugins = [
             }
         }
     ),
+    jorgeplugin,
     importPartial,
     precss,
     autoprefixer,
