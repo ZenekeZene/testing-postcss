@@ -1,3 +1,4 @@
+<<<<<<< 68652dae6d926b20fd197c0342037ccd830d66ac
 /* Special styling for special browser */
 
 
@@ -122,4 +123,76 @@ iframe.hover-fix { position:absolute; left:-1px; top:-1px; z-index:-1; backgroun
 	filter:progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0);
 }
 
+=======
+main {
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 20.23px solid rgb(23, 34, 0);
+}
+* {
+    border: 1px solid rgb(1, 2, 39);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+*:before,
+    *:after {
+    box-sizing: inherit;
+}
+:root {
+    --color-primary: rgb(0, 256,234);
+}
+html,
+body {
+    height: 100%;
+    margin: 0;
+    background-color: rgb(0, 256,234);
+    background-color: var(--color-primary);
+}
+.main {
+    height: inherit;
+    padding: 100px;
+    background-color: rgb(0, 256,234);
+    background-color: var(--color-primary);
+}
+.main__section {
+        --color-primary: rgb(0, 123, 23);
+        padding: 10px;
+        border: 1px solid rgb(0, 256,234);
+        border: 1px solid var(--color-primary);
+    }
+.aspect-box {
+    position: relative;
+    background: rgb(223, 134, 111);
+    width: 20vw;
+    box-sizing: border-box;
+}
+.aspect-box > * {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    box-sizing: border-box;
+}
+.aspect-box:before {
+    position: relative;
+    display: block;
+    content: "";
+    padding-top: 20%;
+    box-sizing: border-box;
+}
+.box {
+    height: 50px;
+    width: 50px;
+    background-color: rgb(5, 34, 34);
+    margin: 20px;
+}
+.box .box {
+        width: 10;
+    }
+.box .box p {
+            color: rgb(0, 0, 0);
+        }
+>>>>>>> Update stylelintrc
 /*# sourceMappingURL=styles.css.map */

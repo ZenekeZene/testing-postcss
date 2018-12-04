@@ -60,10 +60,28 @@
     "no-invalid-double-slash-comments": true,
     # End Possible errors
 
+    # Limit language features
+    "color-named": "never",
+    "color-no-hex": true,
+    "function-blacklist": [],
+    "function-url-no-scheme-relative": true,
+    "function-url-scheme-blacklist": [
+      "ftp", "/^http/"
+    ],
+    "function-url-scheme-whitelist": [],
+    #"function-whitelist": [],
+    "keyframes-name-pattern": "",
+    "number-max-precision": 2,
+    "time-min-milliseconds": 100,
+    "unit-blacklist": [],
+    #"unit-whitelist": [],
+
+    "selector-max-specificity": "0,3,0"
+
   }
 }
 
 # 1: Da falsos positivos, por usar precss, que a su vez usa postcss-preset-env.
-# Este ultimo hace que al usar una Custom Property, se dubplique antes un fallback
+# Este ultimo hace que al usar una Custom Property, se duplique antes un fallback
 # con la misma propiedad pero con el valor de la Custom Property.
 # Ej: background-color: red; background-color: var(--color-red);
