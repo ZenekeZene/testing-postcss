@@ -1,17 +1,28 @@
-var postcss = require('postcss');
+'use strict';
 
-module.exports = postcss.plugin('postcss-testing-plugin', function (opts) {
+var postcss = require('postcss');
+var specificity = require('specificity');
+
+var process = function (root) {
+    let results = [];
+    // Transform CSS AST here
+    root.walkRules(rule => {
+        const selectors = rule.selectors;
+        selectors.forEach(selector => {
+            let specifyRAW = specificity.calculate(selector);
+            let specifyInt = parseInt(specifyRAW[0].specificity.replace(/,/g, ''));
+            results.push(specifyInt);
+        });
+    });
+    return results;
+};
+
+module.exports = postcss.plugin('postcss-testing-plugin', function (opts, callback) {
     opts = opts || {};
 
     // Work with options here
 
     return function (root, result) {
-        // Transform CSS AST here
-        root.walkComments(comment => {
-            if (comment.text.toLowerCase().indexOf('jorge') === 0) {
-                comment.after(postcss.comment({text: 'Deuda tecnica'}));
-                comment.remove();
-            }
-        });
+        callback(process(root));
     };
 });

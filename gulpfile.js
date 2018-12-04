@@ -8,10 +8,15 @@ const importPartial = require('postcss-partial-import');
 
 const autoprefixer = require('autoprefixer');
 const browserSync = require('browser-sync').create();
+const browserSyncReuseTab = require('browser-sync-reuse-tab')(browserSync);
 const ratio = require('postcss-aspect-ratio');
-const jorgeplugin = require('postcss-testing-plugin');
-
+const jorgeplugin = require('./postcss-testing-plugin');
+const chart = require('chart.js');
 const defineProperty = require('postcss-define-property');
+
+let salida = function(results) {
+    require('fs').writeFileSync('build/version.json', 'data = ' + JSON.stringify({'specificities': results }));
+}
 
 const plugins = [
     defineProperty(
@@ -24,7 +29,7 @@ const plugins = [
             }
         }
     ),
-    jorgeplugin,
+    jorgeplugin({}, salida),
     importPartial,
     precss,
     autoprefixer,
@@ -37,7 +42,7 @@ gulp.task('css', () => {
   
     return gulp.src('./src/styles/styles.pcss')
         .pipe( sourcemaps.init() )
-        .pipe( postcss(plugins) )
+        .pipe( postcss(plugins))
         .pipe(gulpStylelint({
             failAfterError: false,
             reportOutputDir: 'reports/lint',
@@ -56,8 +61,9 @@ gulp.task('css', () => {
 
 gulp.task('reload', ['css'], function (done) {
     browserSync.init({
-        server: './'
-    });
+        server: './',
+        open: false
+    }, browserSyncReuseTab);
     
     gulp.watch(src, ['css']);
     gulp.watch("./*.html").on('change', browserSync.reload);

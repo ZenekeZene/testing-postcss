@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../node_modules/coke-sass/src/scss/main.scss"],"names":[],"mappings":"AAAA,2BAA2B","file":"testing.css","sourcesContent":["@debug 'COKE-SASS PACKAGE';\n\n@import 'settings/settings';\n@import '_core/_core';\n@import 'tools/tools';\n\n\n@import 'base/base';\n"]}
