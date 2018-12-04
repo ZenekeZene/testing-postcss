@@ -10,12 +10,12 @@ const autoprefixer = require('autoprefixer');
 const browserSync = require('browser-sync').create();
 const browserSyncReuseTab = require('browser-sync-reuse-tab')(browserSync);
 const ratio = require('postcss-aspect-ratio');
-const jorgeplugin = require('./postcss-testing-plugin');
+const misEstadisticas = require('./postcss-testing-plugin');
 const chart = require('chart.js');
 const defineProperty = require('postcss-define-property');
 
-let salida = function(results) {
-    require('fs').writeFileSync('build/version.json', 'data = ' + JSON.stringify({'specificities': results }));
+let statsFinished = function(results) {
+    console.log('statsFinished');
 }
 
 const plugins = [
@@ -29,7 +29,13 @@ const plugins = [
             }
         }
     ),
-    jorgeplugin({}, salida),
+    misEstadisticas({
+        reporters: [
+            { formatter: 'console', chart: true, maxSpecificity: 30 },
+            { formatter: 'json', save: './build/stats2.json'},
+            { formatter: 'web'}
+        ],
+    }, statsFinished),
     importPartial,
     precss,
     autoprefixer,
@@ -43,14 +49,14 @@ gulp.task('css', () => {
     return gulp.src('./src/styles/styles.pcss')
         .pipe( sourcemaps.init() )
         .pipe( postcss(plugins))
-        .pipe(gulpStylelint({
+        /*.pipe(gulpStylelint({
             failAfterError: false,
             reportOutputDir: 'reports/lint',
             reporters: [
                 {formatter: 'verbose', console: true},
                 {formatter: 'json', save: 'report.json'},
             ],
-        }) )
+        }) )*/
         .pipe( rename({
             extname: ".css"
         }) )

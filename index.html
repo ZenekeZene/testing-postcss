@@ -37,27 +37,33 @@
     <canvas id="myChart" width="400" height="400"></canvas>
     <script type="text/javascript" src="./build/version.json"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-<script>
-    console.log(data.specificities);
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        datasets: [{
-            data: data['specificities'],
-            borderWidth: 0
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
+    <script>
+        console.log(data);
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var dataFinal = [];
+        data.forEach(item => {
+            dataFinal.push({})
+        });
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    data: data,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        stacked: true
+                    }],
+                    xAxes: [{
+                        type: 'linear',
+                        stepSize: 1
+                    }]
                 }
-            }]
-        }
-    }
-});
-</script>
+            }
+        });
+    </script>
 </body>
 </html>   
