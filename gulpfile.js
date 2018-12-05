@@ -29,17 +29,17 @@ const plugins = [
             }
         }
     ),
-    misEstadisticas({
-        reporters: [
-            { formatter: 'console', chart: true, maxSpecificity: 30 },
-            { formatter: 'json', save: './build/stats2.json'},
-            { formatter: 'web'}
-        ],
-    }, statsFinished),
     importPartial,
     precss,
     autoprefixer,
-    ratio
+    ratio,
+    misEstadisticas({
+        reporters: [
+            { formatter: 'console', chart: true, maxSpecificity: 30 },
+            { formatter: 'json', save: './build/stats.json'},
+            { formatter: 'web'}
+        ],
+    }, statsFinished),
 ];
 
 const src = './src/**/*.pcss';

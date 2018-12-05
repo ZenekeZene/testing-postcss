@@ -5,17 +5,40 @@ const postcss = require('postcss');
 const specificity = require('specificity');
 const Chart = require('cli-chart');
 const fs = require('fs');
+const clc = require("cli-color");
+
+var error = clc.red.bold;
+var warn = clc.yellow;
+var notice = clc.blue;
 
 const process = function (root, options) {
-    let results = [];
+    let results = {
+        maxSelectors: 0,
+        specificities: [],
+        _totalSpecificity: 0,
+        rules: []
+    };
     // Transform CSS AST here
     root.walkRules(rule => {
         const selectors = rule.selectors;
-        selectors.forEach(selector => {
+        //console.log(rule);
+        let item = {
+            'source': rule.source.start,
+            'selectors': selectors,
+            'file': rule.source.file
+        };
+
+        rule.selectors.forEach(selector => {
+            //console.log(selector);
             let specifyRAW = specificity.calculate(selector);
             let specifyInt = parseInt(specifyRAW[0].specificity.replace(/,/g, ''));
-            results.push(specifyInt);
+            results._totalSpecificity += specifyInt;
+            results.specificities.push(specifyInt);
+            item.specificity = specifyRAW[0].specificity;
+            item.specificityComputed = specifyInt;
         });
+        
+        results.rules.push(item);
     });
     
     if (options.reporters) {
@@ -27,12 +50,22 @@ const process = function (root, options) {
             return (e.formatter === 'json' ? e : null);
         })[0];
         
-        if (consoleItem)
+        if (consoleItem) {
+            results.maxSelectors = results.specificities.length;
+            results.averageSpecificity = results._totalSpecificity / results.maxSelectors;
+            console.log(notice("-------------\n\n"));
+            console.log(notice("\nSelectors: " + results.maxSelectors));
+            console.log(notice("Average Specificity: " + results.averageSpecificity.toFixed(0)));
+            console.log(notice("-------------\n\n"));
+        }
             // More stats
-        if (consoleItem.chart)
+        if (consoleItem.chart) 
             drawChart(results, consoleItem);
-        if (jsonItem)
-            fs.writeFileSync(jsonItem.save, JSON.stringify({'specificities': results }));
+        //if (jsonItem)
+            //fs.writeFileSync(jsonItem.save, JSON.stringify({'specificities': results }));
+
+        console.log("-------------\n\n");
+        
     }
     return results;
 };
@@ -47,14 +80,29 @@ const drawChart = function(results, options) {
         lmargin: 15,
         step: 1
     });
-    for(let i = 0; i < results.length; i++) {
-        if (results[i] > options.maxSpecificity)
-            chart.addBar(results[i], 'red');
-        else {
-            chart.addBar(results[i], 'green');
+    let color;
+    let warningSelectors = [];
+    for(let i = 0; i < results.rules.length; i++) {
+        let rule = results.rules[i];
+        if (rule.specificityComputed > options.maxSpecificity) {
+            chart.addBar(rule.specificityComputed, 'red');
+            warningSelectors.push(rule);
+        } else {
+            chart.addBar(results.specificities[i], 'green');
         }
     }
     chart.draw();
+    console.log(notice(warningSelectors.length + ' selectors with high specificity ( > ' + options.maxSpecificity + ')'));
+    console.log('\n');
+    warningSelectors.forEach( warningItem => {
+        let output = '';
+        output += '[' + warningItem.source.line + ':' + warningItem.source.column + '] ';
+        warningItem.selectors.forEach( selector => {
+            output += selector;
+        });
+        output += ' [' + warningItem.specificity + ' => ' + warningItem.specificityComputed + ']';
+        console.log(error(output));
+    });
 }
 
 module.exports = postcss.plugin('postcss-testing-plugin', function (options, callback) {
