@@ -15,10 +15,12 @@ const process = function (root, options) {
     let results = {
         maxSelectors: 0,
         specificities: [],
+        specificitesPoints: [],
         _totalSpecificity: 0,
         rules: []
     };
     // Transform CSS AST here
+    let i = 0;
     root.walkRules(rule => {
         const selectors = rule.selectors;
         //console.log(rule);
@@ -29,16 +31,17 @@ const process = function (root, options) {
         };
 
         rule.selectors.forEach(selector => {
-            //console.log(selector);
             let specifyRAW = specificity.calculate(selector);
             let specifyInt = parseInt(specifyRAW[0].specificity.replace(/,/g, ''));
             results._totalSpecificity += specifyInt;
             results.specificities.push(specifyInt);
+            results.specificitesPoints.push({ x: i, y: specifyInt });
             item.specificity = specifyRAW[0].specificity;
             item.specificityComputed = specifyInt;
         });
         
         results.rules.push(item);
+        i++;
     });
     
     if (options.reporters) {
@@ -61,8 +64,8 @@ const process = function (root, options) {
             // More stats
         if (consoleItem.chart) 
             drawChart(results, consoleItem);
-        //if (jsonItem)
-            //fs.writeFileSync(jsonItem.save, JSON.stringify({'specificities': results }));
+        if (jsonItem)
+            fs.writeFileSync(jsonItem.save, 'data = ' + JSON.stringify({'items': results.rules }));
 
         console.log("-------------\n\n");
         
@@ -80,7 +83,7 @@ const drawChart = function(results, options) {
         lmargin: 15,
         step: 1
     });
-    let color;
+    
     let warningSelectors = [];
     for(let i = 0; i < results.rules.length; i++) {
         let rule = results.rules[i];

@@ -35,35 +35,58 @@
     </main>
     <footer class="footer"></footer>
     <canvas id="myChart" width="400" height="400"></canvas>
-    <script type="text/javascript" src="./build/version.json"></script>
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <script type="text/javascript" src="./build/stats.json"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="canvasjs.min.js"></script>
     <script>
-        console.log(data);
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var dataFinal = [];
-        data.forEach(item => {
-            dataFinal.push({})
-        });
+        /*var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
                 datasets: [{
-                    data: data,
-                    borderWidth: 0
+                    data: data.items,
+                    borderWidth: 1,
+                    fill: false,
+                    showLine: true,
+                    spanGaps: true,
+                    lineTension: 1
                 }]
             },
+            fill: true,
             options: {
                 scales: {
-                    yAxes: [{
-                        stacked: true
-                    }],
                     xAxes: [{
                         type: 'linear',
-                        stepSize: 1
+                        position: 'bottom',
                     }]
                 }
             }
+        });*/
+        window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer", {
+            title: {
+                text: "Specificity Graph"
+            },
+            toolTip:{   
+                content: "{name}: {y}"
+            },
+            axisX:{
+                gridColor: "Silver",
+                valueFormatString: "DD/MMM"
+            },
+            data: [
+                {
+                    type: "line",
+                    dataPoints: data.items,
+                    showInLegend: true,
+                    name: "Visits",
+                }
+            ],
         });
+        chart.render();
+    }
+
     </script>
 </body>
 </html>   

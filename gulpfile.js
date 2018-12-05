@@ -35,7 +35,7 @@ const plugins = [
     ratio,
     misEstadisticas({
         reporters: [
-            { formatter: 'console', chart: true, maxSpecificity: 30 },
+            { formatter: 'console', chart: true, maxSpecificity: 60 },
             { formatter: 'json', save: './build/stats.json'},
             { formatter: 'web'}
         ],
