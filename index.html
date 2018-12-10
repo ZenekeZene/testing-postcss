@@ -34,7 +34,7 @@
         </side>
     </main>
     <footer class="footer"></footer>
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <!--<canvas id="myChart" width="400" height="400"></canvas>-->
     <div id="chartContainer" style="height: 300px; width: 100%;"></div>
     <script type="text/javascript" src="./build/stats.json"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
@@ -64,28 +64,45 @@
             }
         });*/
         window.onload = function () {
-        var chart = new CanvasJS.Chart("chartContainer", {
-            title: {
-                text: "Specificity Graph"
-            },
-            toolTip:{   
-                content: "{name}: {y}"
-            },
-            axisX:{
-                gridColor: "Silver",
-                valueFormatString: "DD/MMM"
-            },
-            data: [
-                {
-                    type: "line",
-                    dataPoints: data.items,
-                    showInLegend: true,
-                    name: "Visits",
-                }
-            ],
-        });
-        chart.render();
-    }
+            let points = [];
+            for(let i = 0; i < data.items.length; i++) {
+                let item = data.items[i];
+                points.push({ 'label': item.selectors, 'x': item.specificitesPoints[0].x, 'y': item.specificitesPoints[0].y})
+            }
+
+            let chart = new CanvasJS.Chart("chartContainer", {
+                title: {
+                    text: "Specificity Graph"
+                },
+                animationEnabled: true,
+                toolTip:{   
+                    content: "{label}: {y}"
+                },
+                culture: "es",
+                width: "800",
+                height: 400,
+                axisX:{
+                    gridColor: "Silver",
+                    valueFormatString: "DD/MMM",
+                    labelAngle: 90,
+                    labelFontColor: 'transparent'
+                },
+                zoomEnabled: true,
+                theme: "light2",
+                legend: false,
+                data: [
+                    {
+                        type: "line",
+                        dataPoints: points,
+                        showInLegend: false,
+                        legendText: '',
+                        name: "",
+                    }
+                ],
+            });
+            console.log(data.items);
+            chart.render();
+        }
 
     </script>
 </body>

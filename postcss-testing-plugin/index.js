@@ -27,7 +27,8 @@ const process = function (root, options) {
         let item = {
             'source': rule.source.start,
             'selectors': selectors,
-            'file': rule.source.file
+            'file': rule.source.file,
+            'specificitesPoints': []
         };
 
         rule.selectors.forEach(selector => {
@@ -35,9 +36,10 @@ const process = function (root, options) {
             let specifyInt = parseInt(specifyRAW[0].specificity.replace(/,/g, ''));
             results._totalSpecificity += specifyInt;
             results.specificities.push(specifyInt);
-            results.specificitesPoints.push({ x: i, y: specifyInt });
+            results.specificitesPoints.push({ x: i, y: specifyInt, label: selector });
             item.specificity = specifyRAW[0].specificity;
             item.specificityComputed = specifyInt;
+            item.specificitesPoints.push({ x: i, y: specifyInt, label: selector });
         });
         
         results.rules.push(item);
