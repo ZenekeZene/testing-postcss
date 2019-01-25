@@ -106,7 +106,7 @@ const drawChart = function(results, options) {
             output += selector;
         });
         output += ' [' + warningItem.specificity + ' => ' + warningItem.specificityComputed + ']';
-        console.log(error(output));
+        //console.log(error(output));
     });
 }
 
