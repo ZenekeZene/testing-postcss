@@ -1,109 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pruebas PostCSS</title>
-    <link rel="stylesheet" href="/build/styles/styles.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Testing ChartsPostCSS</title>
+	<link rel="stylesheet" href="/build/styles/styles.css">
 </head>
 <body>
-    <main class="main">
-        <section class="main__section section">
-            <h1 class="title">Probando</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse rem vitae necessitatibus odio ipsa dignissimos corporis temporibus illo impedit. Vel eveniet sapiente unde, excepturi corrupti iure incidunt ipsa nemo! Soluta.</p>
-        </section>
-        <side class="side">
-            <nav class="side__nav">
-                <ol class="side__list list">
-                    <li class="list__item">Option 1</li>
-                    <li class="list__item">Option 2</li>
-                    <li class="list__item">Option 3</li>
-                    <li class="list__item">Option 4</li>
-                    <li class="list__item">Option 5</li>
-                    <li class="list__item">Option 6</li>
-                    <li class="list__item">Option 7</li>
-                </ol>
-            </nav>
-            <div class="aspect-box">
-                <div class="aspect-box__content">
-                  <!-- Any content you like, very useful for video and image elements. -->
-                </div>
-            </div>
-            <div class="box"></div>
-        </side>
-    </main>
-    <footer class="footer"></footer>
-    <!--<canvas id="myChart" width="400" height="400"></canvas>-->
-    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-    <script type="text/javascript" src="./build/stats.json"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-    <script src="canvasjs.min.js"></script>
-    <script>
-        /*var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                datasets: [{
-                    data: data.items,
-                    borderWidth: 1,
-                    fill: false,
-                    showLine: true,
-                    spanGaps: true,
-                    lineTension: 1
-                }]
-            },
-            fill: true,
-            options: {
-                scales: {
-                    xAxes: [{
-                        type: 'linear',
-                        position: 'bottom',
-                    }]
-                }
-            }
-        });*/
-        window.onload = function () {
-            let points = [];
-            for(let i = 0; i < data.items.length; i++) {
-                let item = data.items[i];
-                points.push({ 'label': item.selectors, 'x': item.specificitesPoints[0].x, 'y': item.specificitesPoints[0].y})
-            }
+	<main class="main">
+		<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+	</main>
+	
+	<script type="text/javascript" src="./build/stats.json"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+	<script src="canvasjs.min.js"></script>
+	<script>
+		window.onload = function () {
+			let points = [];
+			
+			for(let i = 0; i < data.items.length; i++) {
+				let item = data.items[i];
+				points.push({ 'label': item.selectors, 'x': item.specificitiesPoints[0].x, 'y': item.specificitiesPoints[0].y})
+			}
 
-            let chart = new CanvasJS.Chart("chartContainer", {
-                title: {
-                    text: "Specificity Graph"
-                },
-                animationEnabled: true,
-                toolTip:{   
-                    content: "{label}: {y}"
-                },
-                culture: "es",
-                width: "800",
-                height: 400,
-                axisX:{
-                    gridColor: "Silver",
-                    valueFormatString: "DD/MMM",
-                    labelAngle: 90,
-                    labelFontColor: 'transparent'
-                },
-                zoomEnabled: true,
-                theme: "light2",
-                legend: false,
-                data: [
-                    {
-                        type: "line",
-                        dataPoints: points,
-                        showInLegend: false,
-                        legendText: '',
-                        name: "",
-                    }
-                ],
-            });
-            console.log(data.items);
-            chart.render();
-        }
+			let chart = new CanvasJS.Chart("chartContainer", {
+				title: {
+					text: "Specificity Graph"
+				},
+				animationEnabled: true,
+				toolTip:{   
+					content: "{label}: {y}"
+				},
+				culture: "es",
+				width: "800",
+				height: 400,
+				axisX:{
+					gridColor: "Silver",
+					valueFormatString: "DD/MMM",
+					labelAngle: 90,
+					labelFontColor: 'transparent'
+				},
+				zoomEnabled: true,
+				theme: "light2",
+				legend: false,
+				data: [
+					{
+						type: "line",
+						dataPoints: points,
+						showInLegend: false,
+						legendText: '',
+						name: "",
+					}
+				],
+			});
+			chart.render();
+		}
 
-    </script>
+	</script>
 </body>
 </html>   
