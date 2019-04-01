@@ -4,7 +4,7 @@ const _ = require('lodash');
 const postcss = require('postcss');
 const specificity = require('specificity');
 
-const handReporters = require('./reporters');
+const handReporters = require('./lib/reporters');
 
 const process = function (root, options) {
 	let results = {
